@@ -1,0 +1,2 @@
+# ArchGen
+Clean Architecture Generator
