@@ -1,0 +1,11 @@
+index_generator:
+  exclude:
+    - "**.g.dart"
+    - "{_,**/_}.dart"
+  indexes:
+    - path: lib/arch_gen
+      name: arch_gen
+      include:
+        - src/**
+      exports:
+        - package: package:meta/meta.dart
