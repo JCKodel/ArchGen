@@ -13,5 +13,6 @@ export 'src/domain/domain.dart';
 export 'src/entities/i_copyable.dart';
 export 'src/entities/i_equatable.dart';
 export 'src/entities/i_serializable.dart';
+export 'src/functional/either_extensions.dart';
 export 'src/functional/failure.dart';
 export 'src/functional/success.dart';
