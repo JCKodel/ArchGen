@@ -2,12 +2,16 @@
 
 library arch_gen;
 
+export 'package:dartz/dartz.dart' hide State;
 export 'package:meta/meta.dart';
 
 export 'src/annotations/data_class.dart';
+export 'src/annotations/environment.dart';
 export 'src/annotations/generators.dart';
-export 'src/annotations/uses.dart';
-export 'src/features/entities/i_copyable.dart';
-export 'src/features/entities/i_equatable.dart';
-export 'src/features/entities/i_serializable.dart';
-export 'src/features/feature.dart';
+export 'src/annotations/implemented_on.dart';
+export 'src/domain/domain.dart';
+export 'src/entities/i_copyable.dart';
+export 'src/entities/i_equatable.dart';
+export 'src/entities/i_serializable.dart';
+export 'src/functional/failure.dart';
+export 'src/functional/success.dart';

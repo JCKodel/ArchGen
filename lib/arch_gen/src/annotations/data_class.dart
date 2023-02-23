@@ -46,6 +46,10 @@ class DataClassGenerator extends GeneratorForAnnotation<DataClass> {
           "(ex.: const factory IYourClass({int id, String name})) = _YourClass";
     }
 
+    if (classElement.constructors[0].isConst == false || classElement.constructors[0].isFactory == false) {
+      throw "The data class must have a const factory constructor";
+    }
+
     final constructor = classElement.constructors[0];
 
     output.add("const ${className}({");

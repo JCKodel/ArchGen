@@ -9,3 +9,6 @@ index_generator:
         - src/**
       exports:
         - package: package:meta/meta.dart
+        - package: package:dartz/dartz.dart
+          hide:
+            - State

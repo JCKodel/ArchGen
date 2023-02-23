@@ -1,3 +1,4 @@
+
 targets:
   $default:
     builders:
@@ -5,6 +6,10 @@ targets:
         enabled: true
       arch_gen|data_class:
         enabled: true
+      arch_gen|environment:
+        enabled: true        
+      arch_gen|implemented_on:
+        enabled: true        
 
 builders:
   data_class:
@@ -14,3 +19,17 @@ builders:
     auto_apply: dependents
     build_to: cache
     applies_builders: ["source_gen|combining_builder"]
+  environment:
+    import: 'package:arch_gen/arch_gen/src/annotations/generators.dart'
+    builder_factories: ["environmentBuilder"]
+    build_extensions: {".dart": ["environment.g.part"]}
+    auto_apply: dependents
+    build_to: cache
+    applies_builders: ["source_gen|combining_builder"]    
+  implemented_on:
+    import: 'package:arch_gen/arch_gen/src/annotations/generators.dart'
+    builder_factories: ["implementedOnBuilder"]
+    build_extensions: {".dart": [".implemented_on.json"]}
+    auto_apply: dependents
+    runs_before: ["arch_gen|environment"]
+    build_to: cache
