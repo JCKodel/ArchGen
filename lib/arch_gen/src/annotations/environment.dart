@@ -16,11 +16,14 @@ class EnvironmentGenerator extends GeneratorForAnnotation<Environment> {
   @override
   Future<String> generateForAnnotatedElement(Element element, ConstantReader annotation, BuildStep buildStep) async {
     final output = <String>[];
+
     final classElement = element as ClassElement;
 
-    for (final constructor in classElement.constructors) {
-      if (constructor.isConst && constructor.isFactory) {
-        await _generateEnvironment(output, classElement, constructor, buildStep);
+    for (final field in classElement.fields) {
+      if (field.isStatic && field.isConst && field.type.getDisplayString(withNullability: false) == "String") {
+        final className = field.computeConstantValue()!.toStringValue()!;
+
+        await _generateEnvironment(output, classElement, className, buildStep);
         output.add("");
       }
     }
@@ -28,21 +31,17 @@ class EnvironmentGenerator extends GeneratorForAnnotation<Environment> {
     return output.join("\n");
   }
 
-  Future<void> _generateEnvironment(List<String> output, ClassElement classElement, ConstructorElement constructor, BuildStep buildStep) async {
-    final classNameParts = constructor.displayName.split(".");
-    final part2 = classNameParts[1];
-    final className = classNameParts[0] + part2.substring(0, 1).toUpperCase() + part2.substring(1);
+  Future<void> _generateEnvironment(List<String> output, ClassElement classElement, String envName, BuildStep buildStep) async {
+    output.add("class ${envName} implements Env {");
+    output.add("${envName}();");
 
-    output.add("@immutable");
-    output.add("class ${className} implements Env {");
-    output.add("const ${className}();");
     final useThisConcreteOn = Glob("**.use_this_concrete_on.json");
 
     await for (final id in buildStep.findAssets(useThisConcreteOn)) {
       output.add("");
 
       final useThisConcreteOn = jsonDecode(await buildStep.readAsString(id)) as Map<String, dynamic>;
-      final entry = useThisConcreteOn[className];
+      final entry = useThisConcreteOn[envName];
 
       if (entry != null) {
         final concrete = entry["concrete"] as String;
@@ -56,7 +55,7 @@ class EnvironmentGenerator extends GeneratorForAnnotation<Environment> {
             final parameters = interface["parameters"] as List<dynamic>;
 
             if (parameters.isEmpty) {
-              output.add("${interface["type"]} get ${property.displayName} => ${concrete}();");
+              output.add("@override ${interface["type"]} get ${property.displayName} => const ${concrete}();");
             } else {
               final concretes = Map.fromEntries(
                 classElement.fields.map(
@@ -67,10 +66,13 @@ class EnvironmentGenerator extends GeneratorForAnnotation<Environment> {
                 ),
               );
 
+              output.add("${interface["type"]}? _${property.displayName};");
+              output.add("");
+
               output.add(
-                "${interface["type"]} get ${property.displayName} => ${concrete}("
+                "@override ${interface["type"]} get ${property.displayName} => _${property.displayName} ?? (_${property.displayName} = ${concrete}("
                 "${parameters.map((p) => "${p["name"]}: ${concretes[p["type"]]}").join(", ")}"
-                ");",
+                ",));",
               );
             }
           }

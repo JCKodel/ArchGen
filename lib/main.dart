@@ -1,8 +1,10 @@
 import 'env.dart';
-import 'to_do_arch/domain/list_to_dos_domain.dart';
 
 Future<void> main() async {
-  Env.initializeEnvironment(const EnvDevelopment());
+  Env.initializeEnvironment(EnvDevelopment());
 
-  print(await Env.current.listToDosDomain.getToDos(ListToDosFilter.all));
+  final state = Env.current.toDoListState;
+  final state2 = Env.current.toDoListState;
+
+  print(state == state2);
 }

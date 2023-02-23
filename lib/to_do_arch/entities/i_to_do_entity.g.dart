@@ -44,21 +44,23 @@ class ToDoEntity implements IToDoEntity, IEquatable, ICopyable, ISerializable {
 
   @override
   bool operator ==(Object other) {
-    if (other is ToDoEntity == false) {
-      return false;
+    if (identical(this, other)) {
+      return true;
     }
 
-    final o = other as ToDoEntity;
+    if (other is ToDoEntity) {
+      return other.runtimeType == runtimeType &&
+          other.child == child &&
+          other.completed == completed &&
+          other.creationTime == creationTime &&
+          other.deletedTime == deletedTime &&
+          other.description == description &&
+          other.id == id &&
+          other.oldPriority == oldPriority &&
+          other.priority == priority;
+    }
 
-    return other.runtimeType == runtimeType &&
-        o.child == child &&
-        o.completed == completed &&
-        o.creationTime == creationTime &&
-        o.deletedTime == deletedTime &&
-        o.description == description &&
-        o.id == id &&
-        o.oldPriority == oldPriority &&
-        o.priority == priority;
+    return false;
   }
 
   @override
@@ -98,6 +100,7 @@ class ToDoEntity implements IToDoEntity, IEquatable, ICopyable, ISerializable {
     );
   }
 
+// ignore: sort_constructors_first
   factory ToDoEntity.fromMap(Map<String, Object?> map) {
     return ToDoEntity(
         child: map['child'] == null
@@ -116,14 +119,15 @@ class ToDoEntity implements IToDoEntity, IEquatable, ICopyable, ISerializable {
                 'high': ToDoPriority.high,
                 'normal': ToDoPriority.normal,
                 'low': ToDoPriority.low,
-              }[map['oldPriority'] as String] as ToDoPriority?,
+              }[map['oldPriority'] as String],
         priority: {
           'high': ToDoPriority.high,
           'normal': ToDoPriority.normal,
           'low': ToDoPriority.low,
-        }[map['priority'] as String] as ToDoPriority);
+        }[map['priority'] as String]!);
   }
 
+  @override
   Map<String, Object?> toMap() {
     return <String, Object?>{
       'child': child?.toMap(),

@@ -101,20 +101,24 @@ class EntityGenerator extends GeneratorForAnnotation<Entity> {
     output.add("");
     output.add("@override");
     output.add("bool operator ==(Object other) {");
-    output.add("if(other is ${className} == false) {");
-    output.add("return false;");
+    output.add("if(identical(this, other)) {");
+    output.add("return true;");
     output.add("}");
     output.add("");
-    output.add("final o = other as ${className};");
-    output.add("");
+
+    output.add("if(other is ${className}) {");
     output.add("return other.runtimeType == runtimeType");
 
     for (final field in parameters) {
-      output.add("&& o.${field.name} == ${field.name}");
+      output.add("&& other.${field.name} == ${field.name}");
     }
 
     output.add(";");
-    output.add("}\n");
+    output.add("}");
+    output.add("");
+    output.add("return false;");
+    output.add("}");
+    output.add("");
     output.add("@override");
     output.add("int get hashCode {");
     output.add("return Object.hash(");
@@ -149,6 +153,7 @@ class EntityGenerator extends GeneratorForAnnotation<Entity> {
 
   void _generateSerialization(List<String> output, List<ParameterElement> parameters, String className, BuildStep buildStep) {
     output.add("");
+    output.add("// ignore: sort_constructors_first");
     output.add("factory ${className}.fromMap(Map<String, Object?> map) {");
     output.add("return ${className}(");
 
@@ -185,7 +190,7 @@ class EntityGenerator extends GeneratorForAnnotation<Entity> {
     output.add(");");
     output.add("}");
     output.add("");
-    output.add("Map<String, Object?> toMap() {");
+    output.add("@override Map<String, Object?> toMap() {");
     output.add("return <String, Object?> {");
 
     for (final field in parameters) {
@@ -224,7 +229,7 @@ class EntityGenerator extends GeneratorForAnnotation<Entity> {
       }
     }
 
-    output.add("}[map['${field.name}'] as String] as ${field.type}");
+    output.add("}[map['${field.name}'] as String]${field.type.nullabilitySuffix == NullabilitySuffix.none ? "!" : ""}");
 
     return output.join();
   }

@@ -16,3 +16,4 @@ export 'src/entities/i_serializable.dart';
 export 'src/functional/either_extensions.dart';
 export 'src/functional/failure.dart';
 export 'src/functional/success.dart';
+export 'src/states/state_store.dart';

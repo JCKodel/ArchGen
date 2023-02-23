@@ -12,6 +12,7 @@ dependencies:
   dartz: ^0.10.1
   glob: ^2.1.1
   meta: ^1.8.0
+  rxdart: ^0.27.7
   source_gen: ^1.2.7
 
 dev_dependencies:

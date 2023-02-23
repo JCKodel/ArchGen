@@ -6,32 +6,77 @@ part of 'env.dart';
 // EnvironmentGenerator
 // **************************************************************************
 
-@immutable
 class EnvProduction implements Env {
-  const EnvProduction();
+  EnvProduction();
 
-  IToDoRepository get toDoRepository => InMemoryToDoRepository();
+  @override
+  IToDoRepository get toDoRepository => const InMemoryToDoRepository();
 
+  ToDoListStateStore? _toDoListState;
+
+  @override
+  ToDoListStateStore get toDoListState =>
+      _toDoListState ??
+      (_toDoListState = ToDoListStateStore(
+        listToDosDomain: listToDosDomain,
+      ));
+
+  ListToDosDomain? _listToDosDomain;
+
+  @override
   ListToDosDomain get listToDosDomain =>
-      ListToDosDomain(toDoRepository: toDoRepository);
+      _listToDosDomain ??
+      (_listToDosDomain = ListToDosDomain(
+        toDoRepository: toDoRepository,
+      ));
 }
 
-@immutable
 class EnvDevelopment implements Env {
-  const EnvDevelopment();
+  EnvDevelopment();
 
-  IToDoRepository get toDoRepository => InMemoryToDoRepository();
+  @override
+  IToDoRepository get toDoRepository => const InMemoryToDoRepository();
 
+  ToDoListStateStore? _toDoListState;
+
+  @override
+  ToDoListStateStore get toDoListState =>
+      _toDoListState ??
+      (_toDoListState = ToDoListStateStore(
+        listToDosDomain: listToDosDomain,
+      ));
+
+  ListToDosDomain? _listToDosDomain;
+
+  @override
   ListToDosDomain get listToDosDomain =>
-      ListToDosDomain(toDoRepository: toDoRepository);
+      _listToDosDomain ??
+      (_listToDosDomain = ListToDosDomain(
+        toDoRepository: toDoRepository,
+      ));
 }
 
-@immutable
 class EnvTest implements Env {
-  const EnvTest();
+  EnvTest();
 
-  IToDoRepository get toDoRepository => InMemoryToDoRepository();
+  @override
+  IToDoRepository get toDoRepository => const InMemoryToDoRepository();
 
+  ToDoListStateStore? _toDoListState;
+
+  @override
+  ToDoListStateStore get toDoListState =>
+      _toDoListState ??
+      (_toDoListState = ToDoListStateStore(
+        listToDosDomain: listToDosDomain,
+      ));
+
+  ListToDosDomain? _listToDosDomain;
+
+  @override
   ListToDosDomain get listToDosDomain =>
-      ListToDosDomain(toDoRepository: toDoRepository);
+      _listToDosDomain ??
+      (_listToDosDomain = ListToDosDomain(
+        toDoRepository: toDoRepository,
+      ));
 }

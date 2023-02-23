@@ -8,9 +8,9 @@ import '../../arch_gen.dart';
 
 @immutable
 class UseThisConcreteOn {
-  const UseThisConcreteOn(this.environment);
+  const UseThisConcreteOn(this.environmentImplementationClassName);
 
-  final Object Function() environment;
+  final String environmentImplementationClassName;
 }
 
 class UseThisConcreteOnGenerator extends Generator {
@@ -24,9 +24,7 @@ class UseThisConcreteOnGenerator extends Generator {
     for (final c in library.classes) {
       if (typeChecker.hasAnnotationOfExact(c)) {
         for (final annotation in typeChecker.annotationsOfExact(c)) {
-          final envNameParts = annotation.getField("environment")!.toFunctionValue()!.displayName.split(".");
-          final part2 = envNameParts[1];
-          final envName = envNameParts[0] + part2.substring(0, 1).toUpperCase() + part2.substring(1);
+          final envName = annotation.getField("environmentImplementationClassName")!.toStringValue()!;
           final types = List<InterfaceType>.from(c.allSupertypes);
 
           types.add(c.thisType);
