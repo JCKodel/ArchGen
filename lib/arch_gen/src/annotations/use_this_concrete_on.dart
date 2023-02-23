@@ -7,19 +7,19 @@ import 'package:source_gen/source_gen.dart';
 import '../../arch_gen.dart';
 
 @immutable
-class ImplementedOn {
-  const ImplementedOn(this.environment);
+class UseThisConcreteOn {
+  const UseThisConcreteOn(this.environment);
 
   final Object Function() environment;
 }
 
-class ImplementedOnGenerator extends Generator {
+class UseThisConcreteOnGenerator extends Generator {
   static Map<DartType, List<DartType>> environmentAttributes = {};
 
   @override
   String? generate(LibraryReader library, BuildStep buildStep) {
-    final Map<String, Object?> implementedOn = {};
-    const typeChecker = TypeChecker.fromRuntime(ImplementedOn);
+    final Map<String, Object?> useThisConcreteOn = {};
+    const typeChecker = TypeChecker.fromRuntime(UseThisConcreteOn);
 
     for (final c in library.classes) {
       if (typeChecker.hasAnnotationOfExact(c)) {
@@ -31,7 +31,7 @@ class ImplementedOnGenerator extends Generator {
 
           types.add(c.thisType);
 
-          implementedOn[envName] = {
+          useThisConcreteOn[envName] = {
             "concrete": c.displayName,
             "interfaces": types
                 .map((i) => {
@@ -51,10 +51,10 @@ class ImplementedOnGenerator extends Generator {
       }
     }
 
-    if (implementedOn.isEmpty) {
+    if (useThisConcreteOn.isEmpty) {
       return null;
     }
 
-    return jsonEncode(implementedOn);
+    return jsonEncode(useThisConcreteOn);
   }
 }

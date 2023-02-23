@@ -10,9 +10,9 @@ enum ListToDosFilter {
 }
 
 @immutable
-@ImplementedOn(Env.development)
-@ImplementedOn(Env.production)
-@ImplementedOn(Env.test)
+@UseThisConcreteOn(Env.development)
+@UseThisConcreteOn(Env.production)
+@UseThisConcreteOn(Env.test)
 class ListToDosDomain extends Domain {
   const ListToDosDomain({required IToDoRepository toDoRepository}) : _toDoRepository = toDoRepository;
 

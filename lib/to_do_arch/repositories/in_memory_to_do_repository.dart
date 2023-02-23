@@ -4,9 +4,9 @@ import '../contracts/i_to_do_repository.dart';
 import '../entities/i_to_do_entity.dart';
 
 @immutable
-@ImplementedOn(Env.development)
-@ImplementedOn(Env.production)
-@ImplementedOn(Env.test)
+@UseThisConcreteOn(Env.development)
+@UseThisConcreteOn(Env.production)
+@UseThisConcreteOn(Env.test)
 class InMemoryToDoRepository implements IToDoRepository {
   const InMemoryToDoRepository();
 

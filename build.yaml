@@ -8,7 +8,7 @@ targets:
         enabled: true
       arch_gen|environment:
         enabled: true        
-      arch_gen|implemented_on:
+      arch_gen|use_this_concrete_on:
         enabled: true        
 
 builders:
@@ -26,10 +26,10 @@ builders:
     auto_apply: dependents
     build_to: cache
     applies_builders: ["source_gen|combining_builder"]    
-  implemented_on:
+  use_this_concrete_on:
     import: 'package:arch_gen/arch_gen/src/annotations/generators.dart'
-    builder_factories: ["implementedOnBuilder"]
-    build_extensions: {".dart": [".implemented_on.json"]}
+    builder_factories: ["useThisConcreteOnBuilder"]
+    build_extensions: {".dart": [".use_this_concrete_on.json"]}
     auto_apply: dependents
     runs_before: ["arch_gen|environment"]
     build_to: cache

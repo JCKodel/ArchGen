@@ -13,8 +13,8 @@ Builder environmentBuilder(BuilderOptions options) => SharedPartBuilder(
       "environment",
     );
 
-Builder implementedOnBuilder(BuilderOptions options) => LibraryBuilder(
-      ImplementedOnGenerator(),
-      generatedExtension: ".implemented_on.json",
+Builder useThisConcreteOnBuilder(BuilderOptions options) => LibraryBuilder(
+      UseThisConcreteOnGenerator(),
+      generatedExtension: ".use_this_concrete_on.json",
       formatOutput: (generated) => generated.replaceAll(RegExp(r"//.*|\s"), ""),
     );

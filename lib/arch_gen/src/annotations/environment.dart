@@ -36,13 +36,13 @@ class EnvironmentGenerator extends GeneratorForAnnotation<Environment> {
     output.add("@immutable");
     output.add("class ${className} implements Env {");
     output.add("const ${className}();");
-    final implementedOn = Glob("**.implemented_on.json");
+    final useThisConcreteOn = Glob("**.use_this_concrete_on.json");
 
-    await for (final id in buildStep.findAssets(implementedOn)) {
+    await for (final id in buildStep.findAssets(useThisConcreteOn)) {
       output.add("");
 
-      final implementedOn = jsonDecode(await buildStep.readAsString(id)) as Map<String, dynamic>;
-      final entry = implementedOn[className];
+      final useThisConcreteOn = jsonDecode(await buildStep.readAsString(id)) as Map<String, dynamic>;
+      final entry = useThisConcreteOn[className];
 
       if (entry != null) {
         final concrete = entry["concrete"] as String;
