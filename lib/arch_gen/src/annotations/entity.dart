@@ -6,11 +6,11 @@ import 'package:source_gen/source_gen.dart';
 import '../../arch_gen.dart';
 
 @immutable
-class DataClass {
-  const DataClass();
+class Entity {
+  const Entity();
 }
 
-class DataClassGenerator extends GeneratorForAnnotation<DataClass> {
+class EntityGenerator extends GeneratorForAnnotation<Entity> {
   @override
   String generateForAnnotatedElement(Element element, ConstantReader annotation, BuildStep buildStep) {
     final classElement = element as ClassElement;

@@ -9,7 +9,7 @@ enum ToDoPriority {
 }
 
 @immutable
-@DataClass()
+@Entity()
 abstract class IToDoEntity implements IEquatable, ICopyable, ISerializable {
   const factory IToDoEntity({
     required String description,

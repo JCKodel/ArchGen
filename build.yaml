@@ -4,7 +4,7 @@ targets:
     builders:
       source_gen|combining_builder:
         enabled: true
-      arch_gen|data_class:
+      arch_gen|entity:
         enabled: true
       arch_gen|environment:
         enabled: true        
@@ -12,10 +12,10 @@ targets:
         enabled: true        
 
 builders:
-  data_class:
+  entity:
     import: 'package:arch_gen/arch_gen/src/annotations/generators.dart'
-    builder_factories: ["dataClassBuilder"]
-    build_extensions: {".dart": ["data_class.g.part"]}
+    builder_factories: ["entityBuilder"]
+    build_extensions: {".dart": ["entity.g.part"]}
     auto_apply: dependents
     build_to: cache
     applies_builders: ["source_gen|combining_builder"]

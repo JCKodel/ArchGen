@@ -5,7 +5,7 @@ library arch_gen;
 export 'package:dartz/dartz.dart' hide State;
 export 'package:meta/meta.dart';
 
-export 'src/annotations/data_class.dart';
+export 'src/annotations/entity.dart';
 export 'src/annotations/environment.dart';
 export 'src/annotations/generators.dart';
 export 'src/annotations/use_this_concrete_on.dart';
